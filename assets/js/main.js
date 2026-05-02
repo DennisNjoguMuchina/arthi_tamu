@@ -76,6 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // =====================================================================
     const setupMobileMenu = () => {
         const menuBtn = document.querySelector('.mobile-menu-btn');
+        const closeBtn = document.querySelector('.mobile-close-btn');
         const mobileMenu = document.querySelector('.mobile-menu');
         const mobileOverlay = document.querySelector('.mobile-menu-overlay');
         const mobileLinks = document.querySelectorAll('.mobile-nav-links a');
@@ -89,6 +90,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         menuBtn.addEventListener('click', toggleMenu);
         mobileOverlay.addEventListener('click', toggleMenu);
+        if (closeBtn) closeBtn.addEventListener('click', toggleMenu);
 
         // Close menu when a link is clicked
         mobileLinks.forEach(link => {
