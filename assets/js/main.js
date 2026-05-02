@@ -77,18 +77,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const setupMobileMenu = () => {
         const menuBtn = document.querySelector('.mobile-menu-btn');
         const mobileMenu = document.querySelector('.mobile-menu');
+        const mobileOverlay = document.querySelector('.mobile-menu-overlay');
         const mobileLinks = document.querySelectorAll('.mobile-nav-links a');
 
-        if (!menuBtn || !mobileMenu) return;
+        if (!menuBtn || !mobileMenu || !mobileOverlay) return;
 
-        menuBtn.addEventListener('click', () => {
+        const toggleMenu = () => {
             mobileMenu.classList.toggle('active');
-        });
+            mobileOverlay.classList.toggle('active');
+        };
+
+        menuBtn.addEventListener('click', toggleMenu);
+        mobileOverlay.addEventListener('click', toggleMenu);
 
         // Close menu when a link is clicked
         mobileLinks.forEach(link => {
             link.addEventListener('click', () => {
                 mobileMenu.classList.remove('active');
+                mobileOverlay.classList.remove('active');
             });
         });
     };

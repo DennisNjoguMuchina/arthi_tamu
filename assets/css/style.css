@@ -82,10 +82,10 @@ p { margin-bottom: var(--spacing-md); }
 /* ==========================================================================
    Navigation
    ========================================================================== */
-.navbar { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; padding: 1rem 0; transition: var(--transition-smooth); }
-/* Fully opaque background when scrolled so images don't bleed through */
-.navbar.scrolled { background-color: rgba(255, 248, 240, 1); padding: 0.75rem 0; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
-.nav-container { max-width: var(--container-width); margin: 0 auto; padding: 0 var(--container-padding); display: flex; justify-content: space-between; align-items: center; }
+.navbar { position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; padding: 1rem 0; background-color: transparent; transition: var(--transition-smooth); }
+/* Opaque background when scrolled */
+.navbar.scrolled { background-color: rgba(255, 248, 240, 0.98); padding: 0.75rem 0; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+.nav-container { max-width: var(--container-width); margin: 0 auto; padding: 0 var(--container-padding); display: flex; align-items: center; }
 
 /* Logo in Navbar */
 /* Height is set extremely large to compensate for internal transparent padding inside the logo image. */
@@ -95,28 +95,38 @@ p { margin-bottom: var(--spacing-md); }
 
 .nav-links { display: none; }
 @media (min-width: 768px) {
-    .nav-links { display: flex; gap: 2.5rem; }
-    /* Added text-shadow to ensure text is readable even if an image slips under it before scrolling */
-    .nav-links a { font-size: 0.9375rem; font-weight: 500; color: var(--clr-charcoal); position: relative; text-shadow: 0 0 10px rgba(255,248,240,0.8); }
+    .nav-links { display: flex; gap: 2.5rem; margin-left: 3rem; }
+    .nav-links a { font-size: 0.9375rem; font-weight: 500; color: var(--clr-charcoal); position: relative; }
     .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background-color: var(--clr-plum); transition: width var(--transition-fast); }
     .nav-links a:hover { color: var(--clr-plum); }
     .nav-links a:hover::after { width: 100%; }
 }
-.nav-cta { display: none; }
+.nav-cta { display: none; margin-left: auto; }
 @media (min-width: 768px) { .nav-cta { display: block; } }
-.mobile-menu-btn { background: transparent; border: none; color: var(--clr-charcoal); cursor: pointer; display: block; }
+.mobile-menu-btn { background: transparent; border: none; color: var(--clr-charcoal); cursor: pointer; display: block; margin-left: auto; }
 @media (min-width: 768px) { .mobile-menu-btn { display: none; } }
 
-/* Mobile Menu */
-.mobile-menu {
+/* Mobile Menu Overlay */
+.mobile-menu-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
-    background-color: var(--clr-cream); z-index: 999;
-    display: flex; flex-direction: column; justify-content: center; align-items: center;
-    transform: translateY(-100%); transition: transform var(--transition-smooth);
+    background-color: rgba(0,0,0,0.5); z-index: 998;
+    opacity: 0; pointer-events: none; transition: opacity var(--transition-smooth);
 }
-.mobile-menu.active { transform: translateY(0); }
-.mobile-nav-links { display: flex; flex-direction: column; align-items: center; gap: 2rem; }
-.mobile-nav-links a:not(.btn-whatsapp) { font-family: var(--font-heading); font-size: 2rem; color: var(--clr-royal-purple); }
+.mobile-menu-overlay.active { opacity: 1; pointer-events: auto; }
+
+/* Mobile Menu Drawer */
+.mobile-menu {
+    position: fixed; top: 0; right: 0; width: 300px; max-width: 80%; height: 100vh;
+    background-color: var(--clr-white); z-index: 999;
+    display: flex; flex-direction: column; justify-content: flex-start; align-items: flex-start;
+    padding: 100px 2rem 2rem;
+    transform: translateX(100%); transition: transform var(--transition-smooth);
+    box-shadow: -10px 0 30px rgba(0,0,0,0.1);
+}
+.mobile-menu.active { transform: translateX(0); }
+.mobile-nav-links { display: flex; flex-direction: column; align-items: flex-start; gap: 1.5rem; width: 100%; }
+.mobile-nav-links a:not(.btn-whatsapp) { font-family: var(--font-body); font-size: 1.125rem; font-weight: 500; color: var(--clr-charcoal); border-bottom: 1px solid var(--clr-lavender-light); padding-bottom: 0.5rem; width: 100%; text-align: left; }
+.mobile-nav-links a:not(.btn-whatsapp):hover { color: var(--clr-royal-purple); border-color: var(--clr-plum); }
 
 /* ==========================================================================
    Animations
